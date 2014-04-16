@@ -6,4 +6,6 @@ django-toolbelt==0.0.1
 gunicorn==18.0
 psycopg2==2.5.2
 static==1.0.2
-rest_framework
+djangorestframework
+markdown
+djangofilter
