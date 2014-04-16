@@ -3,6 +3,10 @@ __pycache__/
 *.py[cod]
 *.pyc
 
+#sensitive message
+jin1234
+jin1234.pub
+
 # C extensions
 *.so
 
@@ -11,6 +15,8 @@ __pycache__/
 env/
 bin/
 build/
+public/
+static/
 develop-eggs/
 dist/
 eggs/
