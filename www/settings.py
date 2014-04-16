@@ -20,18 +20,19 @@ if os.getenv('DATABASE_URL', None) is not None:
 TEMPLATE_DIRS = [
     os.path.join(BASE_DIR, 'templates'),
 ]
-#it is where to look for static files
-STATICFILES_DIRS = (
-    os.path.join(BASE_DIR, 'static'),
-    'static/',
-)
-
 #here is where to paste static files to
 STATIC_ROOT = (
-    #os.path.join(BASE_DIR, 'static'),
-    '/static/'
+    # os.path.join(BASE_DIR,'public', 'static'),
+    # 'static/',
+    os.path.join(os.path.dirname(__file__), "static","staticonly")
+    
 )
 STATIC_URL = '/static/'
+#it is where to look for static files
+STATICFILES_DIRS = (
+    os.path.join(os.path.dirname(__file__), "static"),
+    # 'static/',
+)
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.6/howto/deployment/checklist/
