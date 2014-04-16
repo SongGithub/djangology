@@ -13,9 +13,25 @@ import os
 import dj_database_url
 BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 
+IS_HEROKU = False
+if os.getenv('DATABASE_URL', None) is not None:
+    IS_HEROKU = True
+
 TEMPLATE_DIRS = [
-    os.path.join(BASE_DIR, 'www', 'templates'),
+    os.path.join(BASE_DIR, 'templates'),
 ]
+#it is where to look for static files
+STATICFILES_DIRS = (
+    os.path.join(BASE_DIR, 'static'),
+    'static/',
+)
+
+#here is where to paste static files to
+STATIC_ROOT = (
+    #os.path.join(BASE_DIR, 'static'),
+    '/static/'
+)
+STATIC_URL = '/static/'
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.6/howto/deployment/checklist/
@@ -23,10 +39,8 @@ TEMPLATE_DIRS = [
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'f8unzs1zdbq&n-tfo8cex%(dw5+fj!&%qzwd8l-o*qfrhq#s#&'
 
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
-
-TEMPLATE_DEBUG = True
+DEBUG = not IS_HEROKU 
+TEMPLATE_DEBUG = DEBUG
 
 ALLOWED_HOSTS = "*"
 
@@ -73,7 +87,7 @@ WSGI_APPLICATION = 'www.wsgi.application'
 # }
 
 '''switch between Heroku server and local regarding db settings '''
-if os.getenv('DATABASE_URL', None) is not None:
+if IS_HEROKU:
     # On Heroku
     DATABASES = {
         'default': dj_database_url.config()
@@ -82,12 +96,11 @@ else:
     # Local
     DATABASES = {
         'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'djangology',
-        'USER':'dev_app',
-        'PASSWORD':'legend',
-        # 'HOST':'localhost',
-    }
+            'ENGINE': 'django.db.backends.postgresql_psycopg2',
+            'NAME': 'djangology',
+            'USER':'dev_app',
+            'PASSWORD':'legend',
+        }
     }
 
 REST_FRAMEWORK = {
@@ -120,4 +133,4 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.6/howto/static-files/
-STATIC_URL = '/static/'
+
