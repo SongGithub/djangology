@@ -16,7 +16,7 @@ env/
 bin/
 build/
 public/
-static/
+
 develop-eggs/
 dist/
 eggs/
