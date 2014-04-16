@@ -12,6 +12,10 @@ https://docs.djangoproject.com/en/1.6/ref/settings/
 import os
 BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 
+TEMPLATE_DIRS = [
+    os.path.join(BASE_DIR, 'www', 'templates'),
+]
+
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.6/howto/deployment/checklist/
 
@@ -23,11 +27,10 @@ DEBUG = True
 
 TEMPLATE_DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = "*"
 
 
 # Application definition
-
 INSTALLED_APPS = (
     'django.contrib.admin',
     'django.contrib.auth',
@@ -37,7 +40,8 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'django_extensions', 
     'south',
-    'www',
+    # 'www',
+    'www.apps.todo',
     'rest_framework',
 )
 
@@ -50,40 +54,63 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 )
 
+REST_FRAMEWORK = {
+    'FILTER_BACKEND' : 'rest_framework.filters.DjangoFilterBackend',
+}
 ROOT_URLCONF = 'www.urls'
 
 WSGI_APPLICATION = 'www.wsgi.application'
 
-DATABASES = {
-    'default': {
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql_psycopg2',
+#         'NAME': 'djangology',
+#         'USER':'dev_app',
+#         'PASSWORD':'legend',
+#         # 'HOST':'localhost',
+#     }
+# }
+
+'''switch between Heroku server and local regarding db settings '''
+if os.getenv('DATABASE_URL', None) is not None:
+    # On Heroku
+    DATABASES = {
+        'default': dj_database_url.config()
+    }
+else:
+    # Local
+    DATABASES = {
+        'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': 'djangology',
         'USER':'dev_app',
         'PASSWORD':'legend',
         # 'HOST':'localhost',
     }
-}
+    }
 
 REST_FRAMEWORK = {
     # Use hyperlinked styles by default.
     # Only used if the `serializer_class` attribute is not set on a view.
-    'DEFAULT_MODEL_SERIALIZER_CLASS':
-        'rest_framework.serializers.HyperlinkedModelSerializer',
+    'DEFAULT_FILTER_BACKENDS': ('rest_framework.filters.DjangoFilterBackend',),
+    # 'DEFAULT_MODEL_SERIALIZER_CLASS':
+    #     'rest_framework.serializers.HyperlinkedModelSerializer',
 
-    # Use Django's standard `django.contrib.auth` permissions,
-    # or allow read-only access for unauthenticated users.
-    'DEFAULT_PERMISSION_CLASSES': [
-        'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly'
-    ]
+    # # Use Django's standard `django.contrib.auth` permissions,
+    # # or allow read-only access for unauthenticated users.
+    # 'DEFAULT_PERMISSION_CLASSES': [
+    #     'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly'
+    # ]
 }
+
 # Internationalization
 # https://docs.djangoproject.com/en/1.6/topics/i18n/
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Australia/Melbourne'
 
-USE_I18N = True
+USE_I18N = False
 
 USE_L10N = True
 
