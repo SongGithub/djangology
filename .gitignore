@@ -17,6 +17,7 @@ bin/
 build/
 public/
 static/
+migrations/
 
 develop-eggs/
 dist/
