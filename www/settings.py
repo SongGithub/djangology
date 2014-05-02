@@ -18,12 +18,10 @@ if os.getenv('DATABASE_URL', None) is not None:
     IS_HEROKU = True
 
 TEMPLATE_DIRS = [
-    os.path.join(BASE_DIR, 'templates'),
+    os.path.join(os.path.dirname(__file__),'templates'),
 ]
 #here is where to paste static files to
 STATIC_ROOT = (
-    # os.path.join(BASE_DIR,'public', 'static'),
-    # 'static/',
     os.path.join(os.path.dirname(__file__), "static","staticonly")
     
 )
@@ -31,7 +29,8 @@ STATIC_URL = '/static/'
 #it is where to look for static files
 STATICFILES_DIRS = (
     os.path.join(os.path.dirname(__file__), "static"),
-    # 'static/',
+    # os.path.join(os.path.dirname(__file__), '/www/static/'),
+    
 )
 
 # Quick-start development settings - unsuitable for production
@@ -77,13 +76,16 @@ ROOT_URLCONF = 'www.urls'
 
 WSGI_APPLICATION = 'www.wsgi.application'
 
+##legacy database settings
 # DATABASES = {
 #     'default': {
 #         'ENGINE': 'django.db.backends.postgresql_psycopg2',
 #         'NAME': 'djangology',
 #         'USER':'dev_app',
 #         'PASSWORD':'legend',
-#         # 'HOST':'localhost',
+#         'HOST':'localhost',
+#         'PORT':'5433',
+
 #     }
 # }
 
@@ -101,6 +103,8 @@ else:
             'NAME': 'djangology',
             'USER':'dev_app',
             'PASSWORD':'legend',
+            'HOST':'localhost',
+            'PORT':'5433',
         }
     }
 
@@ -130,8 +134,3 @@ USE_I18N = False
 USE_L10N = True
 
 USE_TZ = True
-
-
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/1.6/howto/static-files/
-

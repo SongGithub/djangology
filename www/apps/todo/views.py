@@ -47,6 +47,5 @@ class CategoryItemUpdateDeleteView(
         return qs.filter(category=self.get_category())
 
 
-class IndexView(generic.TemplateView):
-
-    template_name = 'todo/base.html'
+class Home(generic.TemplateView):
+    template_name = 'index.html'
